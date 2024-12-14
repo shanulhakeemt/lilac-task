@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lilac_task/core/common/variables.dart';
+import 'package:lilac_task/core/constants/asset_constants.dart';
 import 'package:lilac_task/core/theme/app_pallete.dart';
 import 'package:lilac_task/features/home/view/pages/add_requirement.dart';
 
 class SelectRequirementCategory extends StatelessWidget {
-  const SelectRequirementCategory({super.key});
+  SelectRequirementCategory({super.key});
+  final List<String> cateImgs = [AssetConstants.carImg, AssetConstants.bikeImg];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,9 @@ class SelectRequirementCategory extends StatelessWidget {
           children: List.generate(
             2,
             (index) {
-              return SelectCatCard();
+              return SelectCatCard(
+                imgText: cateImgs[index],
+              );
             },
           ),
         ),
@@ -37,7 +41,9 @@ class SelectRequirementCategory extends StatelessWidget {
 class SelectCatCard extends StatelessWidget {
   const SelectCatCard({
     super.key,
+    required this.imgText,
   });
+  final String imgText;
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +72,8 @@ class SelectCatCard extends StatelessWidget {
           child: Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: w * .03, vertical: h * .03),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text('bike'),
-                  Text('zzz'),
-                ],
+              child: Center(
+                child: Image.asset(imgText),
               ))),
     );
   }
