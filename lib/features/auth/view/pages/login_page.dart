@@ -9,7 +9,6 @@ import 'package:lilac_task/core/widgets/custom_field.dart';
 import 'package:lilac_task/core/widgets/loader.dart';
 import 'package:lilac_task/core/widgets/custom_button.dart';
 import 'package:lilac_task/features/auth/viewmodel/auth_viewmodel.dart';
-import 'package:lilac_task/features/home/view/pages/home_page.dart';
 import 'package:lilac_task/features/home/view/pages/nav_page.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -67,7 +66,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ? const Loader()
           : Padding(
               padding:
-                  EdgeInsets.symmetric(horizontal: w * .05, vertical: h * .05),
+                  EdgeInsets.symmetric(horizontal: w * .05, vertical: h * .042),
               child: Form(
                 key: formKey,
                 child: SingleChildScrollView(
@@ -110,12 +109,25 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         height: 15,
                       ),
                       CustomField(
+                        isSufficxIcon: true,
                         controller: passController,
-                        isObscuredText: true,
                         hintText: "Password",
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        height: h * .01,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Forgot Password?',
+                          style: GoogleFonts.poppins(
+                              color: Pallete.blue,
+                              fontSize: w * .04,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .23,
                       ),
                       CustomButton(
                         onPressed: () async {
@@ -127,23 +139,27 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                     password: passController.text.trim());
                           }
                         },
-                        buttonText: "Sign in",
+                        buttonText: "Login",
                       ),
                       SizedBox(
-                        height: h * .21,
+                        height: h * .01,
                       ),
                       GestureDetector(
                         onTap: () {},
                         child: RichText(
                           text: TextSpan(
                               text: "Don't have an account? ",
-                              style: Theme.of(context).textTheme.titleMedium,
-                              children: const [
+                              style: GoogleFonts.poppins(
+                                  color: Pallete.blackColor,
+                                  fontSize: w * .04,
+                                  fontWeight: FontWeight.w400),
+                              children: [
                                 TextSpan(
                                     text: "Register",
-                                    style: TextStyle(
+                                    style: GoogleFonts.poppins(
                                         color: Pallete.blue,
-                                        fontWeight: FontWeight.bold))
+                                        fontSize: w * .04,
+                                        fontWeight: FontWeight.w500))
                               ]),
                         ),
                       )

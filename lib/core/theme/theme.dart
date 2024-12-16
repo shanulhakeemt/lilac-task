@@ -11,9 +11,9 @@ class AppTheme {
       appBarTheme: AppBarTheme(backgroundColor: Pallete.backgroundColor),
       scaffoldBackgroundColor: Pallete.backgroundColor,
       inputDecorationTheme: InputDecorationTheme(
-          contentPadding: const EdgeInsets.all(27),
+          contentPadding: const EdgeInsets.all(24),
           focusedBorder: _border(Pallete.brownColor),
-          enabledBorder: _border(Pallete.borderColor)),
+          enabledBorder: _border(Pallete.brownColor.withOpacity(.1))),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Pallete.backgroundColor,
         type: BottomNavigationBarType.fixed,
