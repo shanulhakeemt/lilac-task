@@ -49,7 +49,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) =>  NavPage(),
+                builder: (context) => NavPage(),
               ),
               (_) => false,
             );
@@ -140,7 +140,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               style: Theme.of(context).textTheme.titleMedium,
                               children: const [
                                 TextSpan(
-                                    text: "Sign Up",
+                                    text: "Register",
                                     style: TextStyle(
                                         color: Pallete.blue,
                                         fontWeight: FontWeight.bold))

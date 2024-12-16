@@ -8,10 +8,29 @@ part 'home_viewmodel.g.dart';
 class HomeViewmodel extends _$HomeViewmodel {
   late HomeRepository _homeRepository;
 
-  addRequirement() async {
+  addRequirement({
+    required String vehicleTypeId,
+      required String brandId,
+      required String vehicleModelId,
+      required String vehicleVarienteId,
+      required String transmissionId,
+      required String fuelTypeId,
+      required String vehicleColorId,
+      required String year,
+  }) async {
     state = const AsyncLoading();
     final res =
-        await _homeRepository.addRequirement(ref.watch(currentTokenProvider));
+        await _homeRepository.addRequirement(
+          brandId: brandId,
+          fuelTypeId: fuelTypeId,
+          token: ref.watch(currentTokenProvider),
+          transmissionId: transmissionId,
+          vehicleColorId: vehicleColorId, 
+          vehicleModelId: vehicleModelId, 
+          vehicleTypeId: vehicleTypeId, 
+          vehicleVarienteId: vehicleVarienteId,
+          year: year
+          );
     final val = switch (res) {
       Left(value: final l) => state =
           AsyncValue.error(l.message, StackTrace.current),

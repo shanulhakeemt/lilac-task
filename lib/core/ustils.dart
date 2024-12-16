@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
+import 'package:lilac_task/core/theme/app_pallete.dart';
 
 void showSnackBar(BuildContext context, String content) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
-    ..showSnackBar(SnackBar(content: Text(content)));
+    ..showSnackBar(
+        SnackBar(backgroundColor: Pallete.brownColor, content: Text(content)));
 }
-

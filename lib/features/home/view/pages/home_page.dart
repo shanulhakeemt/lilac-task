@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lilac_task/core/constants/asset_constants.dart';
@@ -38,7 +39,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-     await   ref.read(listOfVehiclesViewModelProvider.notifier).getVehicles();
+        await ref.read(listOfVehiclesViewModelProvider.notifier).getVehicles();
       },
     );
     super.initState();
@@ -49,7 +50,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
         appBar: AppBar(
           leading: Icon(Icons.menu),
-          actions: [Icon(Icons.notification_add)],
+          actions: [Icon(Icons.notifications)],
         ),
         body: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -35,13 +35,14 @@ class CustomCard extends StatelessWidget {
                   EdgeInsets.symmetric(horizontal: w * .03, vertical: h * .03),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                
                 children: [
                   Image.asset(m['img']!),
                   Consumer(builder: (context, ref, child) {
                     final isLoading =
                         ref.watch(listOfVehiclesViewModelProvider).isLoading ==
                             true;
-                    ;
+
                     final vehicles = ref.watch(listOfVehiclesViewModelProvider);
                     return Text(
                       index != 0
@@ -53,7 +54,7 @@ class CustomCard extends StatelessWidget {
                                   : '',
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.bold,
-                          fontSize: w * .033,
+                          fontSize: w * .06,
                           color: Colors.black),
                     );
                   }),
@@ -65,7 +66,5 @@ class CustomCard extends StatelessWidget {
                 ],
               ),
             )));
-  
-  
   }
 }

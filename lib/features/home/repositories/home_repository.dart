@@ -10,6 +10,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'home_repository.g.dart';
 
 @riverpod
+// ignore: deprecated_member_use_from_same_package
 HomeRepository homeRepository(HomeRepositoryRef ref) {
   return HomeRepository();
 }
@@ -18,22 +19,12 @@ class HomeRepository {
   Future<Either<AppFailure, List<VehicleModel>>> getVehicles(
       String token) async {
     try {
-      print('token $token');
       final response = await http.get(
         Uri.parse("${ServerConstants.serverUrl}vendor/get-total-vehicles"),
-        headers: {
-          // 'Content-Type': 'application/json',
-          'Authorization': token
-        },
-
-        
-
-
-
+        headers: {'Authorization': 'Bearer $token'},
       );
 
       final resBodyMap = jsonDecode(response.body);
-      print(resBodyMap);
       if (response.statusCode != 200) {
         return Left(AppFailure(resBodyMap['message'].runtimeType == List
             ? (resBodyMap['message'] as List).first
@@ -44,31 +35,40 @@ class HomeRepository {
             (e) => VehicleModel.fromMap(e),
           )
           .toList();
-      print(vehicles);
       return Right(vehicles);
     } catch (e) {
       return Left(AppFailure(e.toString()));
     }
   }
 
-  Future<Either<AppFailure, String>> addRequirement(String token) async {
+  Future<Either<AppFailure, String>> addRequirement(
+      {required String vehicleTypeId,
+      required String brandId,
+      required String vehicleModelId,
+      required String vehicleVarienteId,
+      required String transmissionId,
+      required String fuelTypeId,
+      required String vehicleColorId,
+      required String year,
+      required String token}) async {
     try {
+      final reqMap = jsonEncode({
+        'vehicle_type_id': vehicleTypeId,
+        'brand_id': brandId,
+        'vehicle_model_id': vehicleModelId,
+        'vehicle_variant_id': vehicleVarienteId,
+        'transmission_id': transmissionId,
+        'fuel_type_id': fuelTypeId,
+        'vehicle_color_id': vehicleColorId,
+        'year': year
+      });
       final response = await http.post(
           Uri.parse("${ServerConstants.serverUrl}add-requirement"),
           headers: {
-            // 'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
           },
-          body: {
-            'vehicle_type_id': 1,
-            'brand_id': 1,
-            'vehicle_model_id': 1,
-            'vehicle_variant_id': 1,
-            'transmission_id': 1,
-            'fuel_type_id': 1,
-            'vehicle_color_id': 1,
-            'year': 2024
-          });
+          body: reqMap);
       print(response.body);
       final resBodyMap = jsonDecode(response.body);
       print(resBodyMap);

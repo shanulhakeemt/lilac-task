@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilac_task/core/common/variables.dart';
 import 'package:lilac_task/core/theme/app_pallete.dart';
+import 'package:lilac_task/core/ustils.dart';
 import 'package:lilac_task/core/widgets/custom_button.dart';
+import 'package:lilac_task/features/home/view/pages/nav_page.dart';
 import 'package:lilac_task/features/home/viewmodel/home_viewmodel.dart';
 
 final selectedTransmissionIndex = StateProvider(
@@ -13,7 +15,9 @@ final selectedTransmissionIndex = StateProvider(
 );
 
 class AddRequirement extends ConsumerStatefulWidget {
-  const AddRequirement({super.key});
+  const AddRequirement(this.vehicleType, {super.key});
+
+  final String vehicleType;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -59,7 +63,10 @@ class _AddRequirementState extends ConsumerState<AddRequirement> {
         centerTitle: true,
         title: Text(
           'Vehicle requirment',
-          style: GoogleFonts.poppins(),
+          style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w500,
+              fontSize: w * .05,
+              color: Pallete.blackColor),
         ),
       ),
       body: Padding(
@@ -71,7 +78,30 @@ class _AddRequirementState extends ConsumerState<AddRequirement> {
               String label = labels[index];
               if (index == 4) {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: h * .01,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                          text: 'Transmission',
+                          style: GoogleFonts.poppins(
+                              color: Pallete.blackColor,
+                              fontSize: w * .04,
+                              fontWeight: FontWeight.w400),
+                          children: [
+                            TextSpan(
+                                text: "*",
+                                style: GoogleFonts.poppins(
+                                    color: Pallete.red,
+                                    fontSize: w * .04,
+                                    fontWeight: FontWeight.w400))
+                          ]),
+                    ),
+                    SizedBox(
+                      height: h * .003,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -86,14 +116,14 @@ class _AddRequirementState extends ConsumerState<AddRequirement> {
                                     );
                               },
                               child: Container(
-                                  height: h * .05,
-                                  width: w * .38,
+                                  height: h * .064,
+                                  width: w * .42,
                                   decoration: BoxDecoration(
                                       border: Border.all(
                                           color: ref.watch(
                                                       selectedTransmissionIndex) ==
                                                   index
-                                              ? Pallete.blackColor
+                                              ? Pallete.brownColor
                                               : Pallete.transparentColor),
                                       color: Pallete.whiteColor,
                                       boxShadow: [
@@ -111,62 +141,82 @@ class _AddRequirementState extends ConsumerState<AddRequirement> {
                                     child: Text(
                                       transmissions[index],
                                       style: GoogleFonts.poppins(
-                                          color: Pallete.blackColor),
+                                          fontSize: w * .04,
+                                          fontWeight: FontWeight.w500,
+                                          color: ref.watch(
+                                                      selectedTransmissionIndex) ==
+                                                  index
+                                              ? Pallete.brownColor
+                                              : Pallete.greyColor),
                                     ),
                                   )),
                             );
                           });
-                        })
+                        }),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            label,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                    SizedBox(
+                      height: h * .012,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                              text: label,
+                              style: GoogleFonts.poppins(
+                                  color: Pallete.blackColor,
+                                  fontSize: w * .04,
+                                  fontWeight: FontWeight.w400),
+                              children: [
+                                TextSpan(
+                                    text: "*",
+                                    style: GoogleFonts.poppins(
+                                        color: Pallete.red,
+                                        fontSize: w * .04,
+                                        fontWeight: FontWeight.w400))
+                              ]),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * .03, vertical: h * .01),
+                          decoration: BoxDecoration(
+                            color: Pallete
+                                .whiteColor, // Background color of dropdown
+                            borderRadius:
+                                BorderRadius.circular(8), // Rounded corners
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black
+                                    .withOpacity(0.1), // Shadow color
+                                blurRadius: 10, // Blur intensity
+                                offset: Offset(0, 4), // Offset of shadow
+                              ),
+                            ],
+                            // Border color and width
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: w * .03, vertical: h * .01),
-                            decoration: BoxDecoration(
-                              color:
-                                  Colors.white, // Background color of dropdown
-                              borderRadius:
-                                  BorderRadius.circular(8), // Rounded corners
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black
-                                      .withOpacity(0.1), // Shadow color
-                                  blurRadius: 10, // Blur intensity
-                                  offset: Offset(0, 4), // Offset of shadow
-                                ),
-                              ],
-                              // Border color and width
-                            ),
-                            child: DropdownButton<String>(
-                              dropdownColor: Pallete.transparentColor,
-                              value: selectedValues[label],
-                              isExpanded: true,
-                              hint: Text('Select $label'),
-                              items: dropdownOptions[label]!
-                                  .map((option) => DropdownMenuItem<String>(
-                                        value: option,
-                                        child: Text(option),
-                                      ))
-                                  .toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedValues[label] = value;
-                                });
-                              },
-                            ),
+                          child: DropdownButton<String>(
+                            underline:
+                                const SizedBox(), // Removes the bottom indicator
+
+                            dropdownColor: Pallete.whiteColor,
+                            value: selectedValues[label],
+                            isExpanded: true,
+                            hint: Text('Select $label'),
+                            items: dropdownOptions[label]!
+                                .map((option) => DropdownMenuItem<String>(
+                                      value: option,
+                                      child: Text(option),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedValues[label] = value;
+                              });
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     )
                   ],
                 );
@@ -177,14 +227,25 @@ class _AddRequirementState extends ConsumerState<AddRequirement> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      label,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    RichText(
+                      text: TextSpan(
+                          text: label,
+                          style: GoogleFonts.poppins(
+                              color: Pallete.blackColor,
+                              fontSize: w * .04,
+                              fontWeight: FontWeight.w400),
+                          children: [
+                            TextSpan(
+                                text: "*",
+                                style: GoogleFonts.poppins(
+                                    color: Pallete.red,
+                                    fontSize: w * .04,
+                                    fontWeight: FontWeight.w400))
+                          ]),
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: w * .03, vertical: h * .01),
+                          horizontal: w * .03, vertical: h * .012),
                       decoration: BoxDecoration(
                         color: Colors.white, // Background color of dropdown
                         borderRadius:
@@ -200,13 +261,30 @@ class _AddRequirementState extends ConsumerState<AddRequirement> {
                         // Border color and width
                       ),
                       child: DropdownButton<String>(
+                        style: GoogleFonts.poppins(
+                            color: Pallete.blackColor,
+                            fontSize: w * .04,
+                            fontWeight: FontWeight.w500),
+                        underline:
+                            const SizedBox(), // Removes the bottom indicator
+
+                        dropdownColor: Pallete.whiteColor,
                         value: selectedValues[label],
                         isExpanded: true,
-                        hint: Text('Select $label'),
+                        hint: Text(
+                          'Select $label',
+                          style: GoogleFonts.poppins(
+                              fontSize: w * .04, fontWeight: FontWeight.w500),
+                        ),
                         items: dropdownOptions[label]!
                             .map((option) => DropdownMenuItem<String>(
                                   value: option,
-                                  child: Text(option),
+                                  child: Text(
+                                    option,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: w * .04,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ))
                             .toList(),
                         onChanged: (value) {
@@ -220,21 +298,84 @@ class _AddRequirementState extends ConsumerState<AddRequirement> {
                 ),
               );
             }),
-            CustomButton(
-              buttonText: 'Submit',
-              onPressed: () async {
-                await ref.read(homeViewmodelProvider.notifier).addRequirement();
-              },
-            )
+            Consumer(builder: (context, ref, child) {
+              final isLoading = ref.watch(homeViewmodelProvider.select(
+                (value) => value?.isLoading == true,
+              ));
+              ref.listen(
+                homeViewmodelProvider,
+                (_, next) {
+                  next?.when(
+                    data: (data) {
+                      showSnackBar(
+                          context, 'Vehicle requirement created successfully.');
+
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NavPage(),
+                        ),
+                        (_) => false,
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      showSnackBar(context, error.toString());
+                    },
+                    loading: () {},
+                  );
+                },
+              );
+
+              return CustomButton(
+                isLoading: isLoading,
+                buttonText: 'Submit',
+                onPressed: () async {
+                  if (selectedValues['Brand'] == null ||
+                      selectedValues['Label'] == null ||
+                      selectedValues['Name'] == null ||
+                      selectedValues['Year'] == null ||
+                      selectedValues['Fuel'] == null ||
+                      selectedValues['Color'] == null) {
+                    showSnackBar(context, 'Please complete the all fields ');
+                  } else {
+                    await ref
+                        .read(homeViewmodelProvider.notifier)
+                        .addRequirement(
+                          brandId: dropdownOptions['Brand']
+                                  ?.indexOf(selectedValues['Brand'] ?? '')
+                                  .toString() ??
+                              '1',
+                          fuelTypeId: dropdownOptions['Fuel']
+                                  ?.indexOf(selectedValues['Fuel'] ?? '')
+                                  .toString() ??
+                              '1',
+                          transmissionId:
+                              "${ref.watch(selectedTransmissionIndex) + 1}",
+                          vehicleColorId: dropdownOptions['Color']
+                                  ?.indexOf(selectedValues['Color'] ?? '')
+                                  .toString() ??
+                              '1',
+                          vehicleModelId: dropdownOptions['Label']
+                                  ?.indexOf(selectedValues['Label'] ?? '')
+                                  .toString() ??
+                              '1',
+                          vehicleTypeId: widget.vehicleType,
+                          vehicleVarienteId: dropdownOptions['Name']
+                                  ?.indexOf(selectedValues['Name'] ?? '')
+                                  .toString() ??
+                              '1',
+                          year: dropdownOptions['Year']
+                                  ?.indexOf(selectedValues['Year'] ?? '')
+                                  .toString() ??
+                              '1',
+                        );
+                  }
+                },
+              );
+            })
           ]),
         ),
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: AddRequirement(),
-  ));
 }

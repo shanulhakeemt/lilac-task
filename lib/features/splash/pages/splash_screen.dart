@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lilac_task/core/common/variables.dart';
 import 'package:lilac_task/core/constants/asset_constants.dart';
+import 'package:lilac_task/core/theme/app_pallete.dart';
 import 'package:lilac_task/features/auth/view/pages/login_page.dart';
 import 'package:lilac_task/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:lilac_task/features/home/view/pages/nav_page.dart';
@@ -48,10 +50,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    h = MediaQuery.of(context).size.height;
+    w = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('splash'), Image.asset(AssetConstants.logoIcon)],
+      body: Center(
+        child: Center(
+          child: Image.asset(width: w * .8, AssetConstants.splashLogo),
+        ),
       ),
     );
   }

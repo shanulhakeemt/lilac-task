@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lilac_task/core/common/variables.dart';
 import 'package:lilac_task/core/constants/asset_constants.dart';
 import 'package:lilac_task/core/theme/app_pallete.dart';
+import 'package:lilac_task/core/ustils.dart';
 import 'package:lilac_task/features/home/view/pages/add_requirement.dart';
 
 class SelectRequirementCategory extends StatelessWidget {
@@ -13,12 +15,19 @@ class SelectRequirementCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
             icon: Icon(CupertinoIcons.back)),
-        title: Text('What would you prefer to have?'),
+        title: Text(
+          'What would you prefer to have?',
+          style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w500,
+              fontSize: w * .042,
+              color: Pallete.blackColor),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: w * .08, vertical: h * .08),
@@ -29,6 +38,7 @@ class SelectRequirementCategory extends StatelessWidget {
             (index) {
               return SelectCatCard(
                 imgText: cateImgs[index],
+                index: index,
               );
             },
           ),
@@ -42,18 +52,24 @@ class SelectCatCard extends StatelessWidget {
   const SelectCatCard({
     super.key,
     required this.imgText,
+    required this.index,
   });
   final String imgText;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            return AddRequirement();
-          },
-        ));
+        if (index == 1) {
+          showSnackBar(context, 'Temporarily, the bike is not accessible.');
+        } else {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return AddRequirement('${index + 1}');
+            },
+          ));
+        }
       },
       child: Container(
           height: h * .19,

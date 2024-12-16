@@ -20,7 +20,10 @@ class RequirementsScreen extends StatelessWidget {
         backgroundColor: Pallete.backgroundColor,
         title: Text(
           'Requirement List',
-          style: GoogleFonts.poppins(),
+          style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w500,
+              fontSize: w * .05,
+              color: Pallete.blackColor),
         ),
         centerTitle: true,
       ),
@@ -48,26 +51,56 @@ class RequirementsScreen extends StatelessWidget {
                       horizontal: w * .03, vertical: h * .03),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Rolls Roys Ghost Standard (2020)',
                         style: GoogleFonts.poppins(
-                            fontSize: w * .03, fontWeight: FontWeight.bold),
+                            fontSize: w * .04, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: h * .01,
                       ),
                       ...List.generate(
                         3,
                         (index) => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text(l1[index]), Text(l2[index])],
+                          children: [
+                            Text(
+                              l1[index],
+                              style: GoogleFonts.poppins(
+                                  color: Pallete.greyColor,
+                                  fontSize: w * .04,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            Text(
+                              l2[index],
+                              style: GoogleFonts.poppins(
+                                  color: Pallete.blackColor,
+                                  fontSize: w * .04,
+                                  fontWeight: FontWeight.w300),
+                            )
+                          ],
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Active"),
-                          Switch(
-                            value: true,
-                            onChanged: (value) {},
+                          Text(
+                            "Active",
+                            style: GoogleFonts.poppins(
+                                fontSize: w * .04, fontWeight: FontWeight.w500),
+                          ),
+                          Transform.scale(
+                            scale: w *
+                                .002, // Adjust this value to decrease or increase the size
+                            child: Switch(
+                              activeTrackColor: Pallete.brownColor,
+                              value: true,
+                              onChanged: (value) {
+                                // Handle the value change
+                              },
+                            ),
                           )
                         ],
                       ),
