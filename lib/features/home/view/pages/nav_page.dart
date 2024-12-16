@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,19 +24,30 @@ class NavPage extends ConsumerWidget {
     ProfileScreen()
   ];
   final List<Map<String, dynamic>> m = [
-    {"name": "Profile", "icon": Icons.person},
-    {"name": "Messages", "icon": Icons.message},
-    {"name": "Sell", "icon": Icons.sell},
-    {"name": "Requirements", "icon": Icons.assignment},
-    {"name": "Profile", "icon": Icons.person},
+    {"name": "Home", "icon": CupertinoIcons.house},
+    {"name": "Messages", "icon": CupertinoIcons.bubble_middle_bottom},
+    {"name": "Sell", "icon": CupertinoIcons.money_dollar_circle},
+    {"name": "Requirements", "icon": CupertinoIcons.add},
+    {"name": "Profile", "icon": CupertinoIcons.person},
+  ];
+  final List<IconData> selectedIconsList = [
+    CupertinoIcons.house_fill,
+    CupertinoIcons.bubble_middle_top_fill,
+    CupertinoIcons.money_dollar_circle_fill,
+    CupertinoIcons.add_circled_solid,
+    CupertinoIcons.person_alt,
   ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: GoogleFonts.poppins(color: Pallete.brownColor),
-        unselectedLabelStyle: GoogleFonts.poppins(color: Pallete.greyColor),
+        backgroundColor: Pallete.whiteColor,
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+        unselectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
+        selectedItemColor: Pallete.brownColor,
+        unselectedItemColor: Pallete.brownColor,
         currentIndex: ref.watch(selectedNavIndex),
         onTap: (value) {
           ref.read(selectedNavIndex.notifier).update(
@@ -46,9 +58,12 @@ class NavPage extends ConsumerWidget {
           pages.length,
           (index) {
             return BottomNavigationBarItem(
+              backgroundColor: Pallete.whiteColor,
               icon: Icon(
-                m[index]['icon'] as IconData,
-                color: Pallete.blackColor,
+                index == ref.watch(selectedNavIndex)
+                    ? selectedIconsList[ref.watch(selectedNavIndex)]
+                    : m[index]['icon'] as IconData,
+                color: Pallete.brownColor,
               ),
               label: m[index]['name'],
             );

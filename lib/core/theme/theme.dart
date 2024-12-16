@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lilac_task/core/theme/app_pallete.dart';
 
 class AppTheme {
@@ -13,6 +14,12 @@ class AppTheme {
           contentPadding: const EdgeInsets.all(27),
           focusedBorder: _border(Pallete.brownColor),
           enabledBorder: _border(Pallete.borderColor)),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Pallete.backgroundColor));
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: Pallete.backgroundColor,
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+        unselectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w400),
+        selectedItemColor: Pallete.brownColor,
+        unselectedItemColor: Pallete.brownColor,
+      ));
 }

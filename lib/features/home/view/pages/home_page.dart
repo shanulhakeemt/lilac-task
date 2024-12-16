@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lilac_task/core/common/variables.dart';
 import 'package:lilac_task/core/constants/asset_constants.dart';
 import 'package:lilac_task/features/home/view/widgets/custom_card.dart';
 import 'package:lilac_task/features/home/viewmodel/list_of_vehicles.dart';
@@ -49,8 +50,18 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Icon(Icons.menu),
-          actions: [Icon(Icons.notifications)],
+          leading: Icon(
+            CupertinoIcons.list_bullet,
+            size: w * .081,
+          ),
+          actions: [
+            SizedBox(
+                width: w * .15,
+                child: Icon(
+                  CupertinoIcons.bell,
+                  size: w * .081,
+                ))
+          ],
         ),
         body: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
